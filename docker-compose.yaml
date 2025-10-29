@@ -1,14 +1,18 @@
 services:
-  postgres:
-    image: postgres:latest
+  pg:
+    image: postgres
     environment:
+      POSTGRES_DB: music
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: music
-      PGDATA: /var/lib/postgresql/data
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/18/main
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
 volumes:
   pgdata:
