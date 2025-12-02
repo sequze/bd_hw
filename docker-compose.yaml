@@ -1,6 +1,7 @@
 services:
   pg:
-    image: postgres
+    build: .
+    command: postgres -c shared_preload_libraries=pg_cron -c cron.database_name=music
     environment:
       POSTGRES_DB: music
       POSTGRES_USER: user
